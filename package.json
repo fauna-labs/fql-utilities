@@ -1,0 +1,32 @@
+{
+  "name": "@fauna-labs/fql-utilities",
+  "version": "0.1.0",
+  "description": "A library of FQL utilities for Fauna Schema Migrate, implemented in TypeScript.",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/fauna-labs/fql-utilities.git"
+  },
+  "keywords": [
+    "FQL",
+    "FP",
+    "utilities",
+    "math",
+    "array",
+    "list",
+    "vector",
+    "geo"
+  ],
+  "author": "Fauna Labs",
+  "license": "MIT-0",
+  "bugs": {
+    "url": "https://github.com/fauna-labs/fql-utilities/issues"
+  },
+  "homepage": "https://github.com/fauna-labs/fql-utilities#readme",
+  "dependencies": {
+    "faunadb": "^4.4.1"
+  }
+}

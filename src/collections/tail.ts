@@ -1,0 +1,70 @@
+// Copyright Fauna, Inc.
+// SPDX-License-Identifier: MIT-0
+
+import faunadb, { CreateFunction } from 'faunadb';
+
+const q = faunadb.query
+const {
+  Abort,
+  Count,
+  If,
+  IsArray,
+  Lambda,
+  Let,
+  LT,
+  Query,
+  Reverse,
+  Subtract,
+  Take,
+  Var
+} = q;
+
+/**
+ * @param {Array<any>} array - The array to take the tail from.
+ * @returns {Array<any>} - The tail of the array.
+ * 
+ * Tail() accepts a Fauna Array and returns a new array consisting of every
+ * element except the first. If the array is empty, Tail() returns an empty array.
+ *
+ * Dependencies:
+ * <none>
+ *
+ * Usage in Fauna Schema Migrate:
+ * ```js
+ * import { Tail } from '@fauna-labs/fql-utilities/collections';
+ * export default Tail();
+ * ```
+ *
+ * Usage in FQL:
+ * ```fql
+ * Let(
+ *   {
+ *     array: [0, 1, 2],
+ *     shortArray: Call("Tail", Var("array"))
+ *   },
+ *   Equals(Count(Var("shortArray")), 2) // true
+ * )
+ *```
+ */
+export function Tail(array: faunadb.Expr): faunadb.Expr {
+  return CreateFunction({
+    name: "Tail",
+    body: Query(
+      Lambda(
+        ["array"],
+        If(
+          IsArray(Var("array")),
+          Let(
+            { tail_length: Subtract(Count(Var("array")), 1) },
+            If(
+              LT(Var("tail_length"), 0),
+              Var("array"),
+              Reverse(Take(Var("tail_length"), Reverse(Var("array"))))
+            )
+          ),
+          Abort("Tail() requires one argument that is an array.")
+        )
+      )
+    )
+  });
+}
