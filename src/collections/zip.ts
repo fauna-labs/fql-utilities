@@ -31,20 +31,25 @@ const {
  * @param {Array<any>} array2 - The second array to zip. `array2` must be the same length as `array1`.
  * @returns {Array<any>} A new array of tuples where each element contains the corresponding element from `array1` and `array2`.
  * 
- * Dependencies:
+ * ### Consumes per call
+ * * 0 Read Ops
+ * * 0 Write Ops
+ * * 1 ComputeOp ( FQL verbs total, including 19 FQL verbs each for two Tail calls)
+ * 
+ * ### Dependencies:
  * * [`Tail()`](./tail.ts)
  * ```js
  * import { Tail } from '@fauna-labs/fql-utilities/collections';
  * export default Tail();
  * ```
  *
- * Usage in Fauna Schema Migrate:
+ * ### Usage in Fauna Schema Migrate:
  * ```js
  * import { Zip } from '@fauna-labs/fql-utilities/collections';
  * export default Zip();
  * ```
  *
- * Usage in FQL:
+ * ### Usage in FQL:
  * ```fql
  * Let(
  *   { zippedArray: Call("Zip", Var("array1"), Var("array2")) },

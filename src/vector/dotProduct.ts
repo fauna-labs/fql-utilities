@@ -21,7 +21,6 @@ const {
  * @param {Array<number>} a - The first vector.
  * @param {Array<number>} b - The second vector. `b` must be the same length as `a`.
  * @returns {number} The dot product of the two vectors.
- *
  * Dependencies:
  * * [`Tail()`](../collections/tail.ts)
  * ```js

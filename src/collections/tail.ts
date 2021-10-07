@@ -26,16 +26,21 @@ const {
  * Tail() accepts a Fauna Array and returns a new array consisting of every
  * element except the first. If the array is empty, Tail() returns an empty array.
  *
- * Dependencies:
- * <none>
+ * ### Consumes per call
+ * * 0 Read Ops
+ * * 0 Write Ops
+ * * 1 ComputeOp (19 FQL verbs)
+ * 
+ * ### Dependencies:
+ * none
  *
- * Usage in Fauna Schema Migrate:
+ * ### Usage in Fauna Schema Migrate:
  * ```js
  * import { Tail } from '@fauna-labs/fql-utilities/collections';
  * export default Tail();
  * ```
  *
- * Usage in FQL:
+ * ### Usage in FQL:
  * ```fql
  * Let(
  *   {
@@ -46,7 +51,7 @@ const {
  * )
  *```
  */
-export function Tail(array: faunadb.Expr): faunadb.Expr {
+export function Tail(): faunadb.Expr {
   return CreateFunction({
     name: "Tail",
     body: Query(
