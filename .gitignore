@@ -39,3 +39,8 @@ dist
 
 # ignore yarn.lock
 yarn.lock
+
+# dotenv files
+.env.test
+.env.local
+.env

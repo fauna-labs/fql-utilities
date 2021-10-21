@@ -7,12 +7,14 @@ const q = faunadb.query
 const {
   Abort,
   Count,
+  Exists,
   If,
   IsArray,
   Lambda,
   Let,
   LT,
   Query,
+  Update,
   Reverse,
   Subtract,
   Take,
@@ -51,25 +53,34 @@ const {
  * )
  *```
  */
-export function Tail(): faunadb.Expr {
+
+const body = Query(Lambda(
+  ["array"],
+  If(
+    IsArray(Var("array")),
+    Let(
+      { tail_length: Subtract(Count(Var("array")), 1) },
+      If(
+        LT(Var("tail_length"), 0),
+        Var("array"),
+        Reverse(Take(Var("tail_length"), Reverse(Var("array"))))
+      )
+    ),
+    Abort("Tail() requires one argument that is an array.")
+  )
+));
+
+// export function Tail(): faunadb.Expr {
+//   return If(
+//     Exists(Function("Tail")),
+//     Update(Function("Tail"), { body: body }),
+//     CreateFunction({ name: "Tail", body: body })
+//   );
+// }
+
+export function Tail(replace: boolean = false): faunadb.Expr {
   return CreateFunction({
     name: "Tail",
-    body: Query(
-      Lambda(
-        ["array"],
-        If(
-          IsArray(Var("array")),
-          Let(
-            { tail_length: Subtract(Count(Var("array")), 1) },
-            If(
-              LT(Var("tail_length"), 0),
-              Var("array"),
-              Reverse(Take(Var("tail_length"), Reverse(Var("array"))))
-            )
-          ),
-          Abort("Tail() requires one argument that is an array.")
-        )
-      )
-    )
+    body: body 
   });
 }
