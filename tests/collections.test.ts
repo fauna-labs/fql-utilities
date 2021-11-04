@@ -14,8 +14,8 @@ const {
 } = q;
 
 const faunaClient = new faunadb.Client({
-  secret: process.env.FAUNADB_ADMIN_KEY || "fnAEVSa9Z4AAQxE3edcPeF3i6oDCdjIakeISJ-_t",
-  domain: process.env.FAUNADB_DOMAIN || "db.us.fauna.com",
+  secret: process.env.FAUNADB_ADMIN_KEY,
+  domain: process.env.FAUNADB_DOMAIN || "db.fauna.com",
 })
 
 beforeAll(() => {
