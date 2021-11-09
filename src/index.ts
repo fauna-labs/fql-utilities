@@ -1,6 +1,21 @@
 // Copyright Fauna, Inc.
 // SPDX-License-Identifier: MIT-0
 
-// import { Auth } from './auth';
-export { Tail, Zip } from './collections';
-export { DotProduct } from './vector';
+export {
+  Tail,
+  Zip
+} from './collections';
+
+export {
+  CrossProduct,
+  DotProduct
+} from './vector';
+
+export {
+  CreateQueue,
+  CreateQueueIndex,
+  DeleteMessage,
+  PurgeQueue,
+  ReceiveMessage,
+  SendMessage,
+} from './queue';
