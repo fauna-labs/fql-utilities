@@ -8,13 +8,15 @@ const {
   Collection,
   Equals,
   Get,
+  If,
+  IsNull,
   Let,
   Select,
   Var
 } = q;
 
 /**
- * @param {faunadb.Expr} name - The name of the collection to check.
+ * @param {string} name - The name of the collection to check.
  * @returns {boolean} - True if the collection exists and is a queue; false otherwise.
  * 
  * Tail() accepts a Fauna Array and returns a new array consisting of every
@@ -51,8 +53,8 @@ const {
 export function IsQueue(name: faunadb.Expr): faunadb.Expr {
   return Let(
     {
-      collection: Collection(Var("name")),
-      metadata: Select(["data"], Get(Var("collection"))),
+      collection: Collection(name),
+      metadata: Select(["data"], Get(Var("collection")), { queue: false }),
       isQueue: Select(["queue"], Var("metadata"))
     },
     Equals(Var("isQueue"), true)
