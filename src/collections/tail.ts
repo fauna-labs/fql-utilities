@@ -5,19 +5,12 @@ import faunadb, { CreateFunction } from 'faunadb';
 
 const q = faunadb.query
 const {
+  Drop,
   Abort,
-  Count,
-  Exists,
   If,
   IsArray,
   Lambda,
-  Let,
-  LT,
   Query,
-  Update,
-  Reverse,
-  Subtract,
-  Take,
   Var
 } = q;
 
@@ -31,7 +24,7 @@ const {
  * ### Consumes per call
  * * 0 Read Ops
  * * 0 Write Ops
- * * 1 ComputeOp (19 FQL verbs)
+ * * 1 ComputeOp (8 FQL verbs)
  * 
  * ### Dependencies:
  * none
@@ -58,25 +51,10 @@ const body = Query(Lambda(
   ["array"],
   If(
     IsArray(Var("array")),
-    Let(
-      { tail_length: Subtract(Count(Var("array")), 1) },
-      If(
-        LT(Var("tail_length"), 0),
-        Var("array"),
-        Reverse(Take(Var("tail_length"), Reverse(Var("array"))))
-      )
-    ),
+    Drop(1, Var("array")),
     Abort("Tail() requires one argument that is an array.")
   )
 ));
-
-// export function Tail(): faunadb.Expr {
-//   return If(
-//     Exists(Function("Tail")),
-//     Update(Function("Tail"), { body: body }),
-//     CreateFunction({ name: "Tail", body: body })
-//   );
-// }
 
 export function Tail(replace: boolean = false): faunadb.Expr {
   return CreateFunction({

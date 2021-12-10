@@ -26,12 +26,28 @@ afterAll(() => {
   return teardownDatabase();
 });
 
-test('Tail works', async () => {
+test('Tail returns an array of length n-1', async () => {
   const result = await faunaClient.query(
     Call("Tail", [[1, 2, 3, 4, 5]])
   );
 
   expect(result).toEqual([2, 3, 4, 5]);
+});
+
+test('Tail on an array of length 1 returns an empty array', async () => {
+  const result = await faunaClient.query(
+    Call("Tail", [[1]])
+  );
+
+  expect(result).toEqual([]);
+});
+
+test('Tail on an empty array returns an empty array', async () => {
+  const result = await faunaClient.query(
+    Call("Tail", [[]])
+  );
+
+  expect(result).toEqual([]);
 });
 
 test('Zip works', async () => {
