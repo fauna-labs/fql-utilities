@@ -1,0 +1,2 @@
+process.env.FAUNADB_ADMIN_KEY = '<secret_key>';
+process.env.FAUNADB_DOMAIN = 'db.fauna.com';

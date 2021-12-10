@@ -1,6 +1,6 @@
 {
   "name": "@fauna-labs/fql-utilities",
-  "version": "0.2.2",
+  "version": "0.2.3",
   "description": "A library of FQL utilities for Fauna Schema Migrate, implemented in TypeScript.",
   "main": "dist/index.js",
   "types": "dist/index.d.ts",

@@ -44,3 +44,6 @@ yarn.lock
 .env.test
 .env.local
 .env
+
+# Jest environment variables
+.jest/setEnvVars.js
